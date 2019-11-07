@@ -17,16 +17,37 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
 
     <div class="container">
-        <a href="" class="navbar-brand h2 mb-0">JCAVI</a>
+        <a href="https://www.jcavitreinamentos.com.br/" class="navbar-brand h2 mb-0">JCAVI</a>
         <button class="navbar-toggler" type="submit" data-toggle="collapse" data-target="#navbarSite">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="colapse navbar-collapse" id="navbarSite">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a href="#" th:href="@{/cliente/adicionar}" class="nav-link">Cadastrar Clientes</a></li>
-                <li class="nav-item"><a href="#" th:href="@{/cliente}" class="nav-link">Listar Clientes</a></li>
-                <li class="nav-item"><a href="#" th:href="@{/produto/adicionar}" class="nav-link">Cadastrar Produtos</a></li>
-                <li class="nav-item"><a href="#" th:href="@{/produto}" class="nav-link">Listar Proutos</a></li>
+                <li class="nav-item dropdown">
+                    <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navDrop">Categorias</a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item" th:href="@{/categoria/adicionar}">Cadastrar</a>
+                        <a href="#" class="dropdown-item" th:href="@{/categoria}">Listar</a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navDrop">Clientes</a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item" th:href="@{/cliente/adicionar}">Cadastrar</a>
+                        <a href="#" class="dropdown-item" th:href="@{/cliente}">Listar</a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navDrop">Produtos</a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item" th:href="@{/produto/adicionar}">Cadastrar</a>
+                        <a href="#" class="dropdown-item" th:href="@{/produto}">Listar</a>
+                    </div>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
@@ -40,7 +61,7 @@
                 </li>
             </ul>
             <form action="" class="form-inline">
-                <input type="search" class="form-control ml-4 mr-2" placeholder="Digite aqui...">
+                <input type="search" class="form-control ml-4 mr-2" placeholder="Buscar...">
                 <button type="submit" class="btn btn-dark">Ok</button>
             </form>
         </div>
@@ -55,10 +76,10 @@
 
 <div class="jumbotron container col-md-6">
 
-    <div class="container" th:each="c : ${cliente}">
-        <h2 th:text="${c.nome}"></h2>
-        <b>R$ </b><p th:text="${c.sobrenome}"></p>
-        <b>Quantidade: </b><p th:text="${c.email}"></p>
+    <div class="container" th:each="cliente : ${cliente}">
+        <h2 th:text="${cliente.nome}"></h2>
+       <p th:text="${cliente.sobrenome}"></p>
+        <b>Email: </b><p th:text="${cliente.email}"></p>
     </div>
 
 </div>
@@ -86,6 +107,9 @@
             Adicionar Endereço
         </button>
     </form>
+
+    <br />
+    <input type="button" onclick="location.href='/cliente';" value="Cancelar" />
 </div>
 
 <br/>

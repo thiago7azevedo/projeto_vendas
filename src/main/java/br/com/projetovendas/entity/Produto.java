@@ -1,5 +1,8 @@
 package br.com.projetovendas.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
@@ -26,7 +29,7 @@ public class Produto extends BaseEntity {
     @ManyToMany(mappedBy = "produto", cascade = CascadeType.ALL)
     private List<Categoria> categoria = new ArrayList<>();
 
-    public Produto(){
+    public Produto() {
     }
 
     public Long getId() {

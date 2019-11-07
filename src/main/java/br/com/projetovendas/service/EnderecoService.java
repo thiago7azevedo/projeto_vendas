@@ -26,4 +26,4 @@ public class EnderecoService {
         return enderecoRepository.findByCliente(cliente);
     }
 
-}
+   }

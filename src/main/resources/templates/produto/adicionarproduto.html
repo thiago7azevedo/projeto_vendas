@@ -9,23 +9,44 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-          <title>Listar Produtos</title>
+          <title>Adicionar Produtos</title>
         </head>
         <body>
         
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
         
             <div class="container">
-                <a href="" class="navbar-brand h2 mb-0">JCAVI</a>
+                <a href="https://www.jcavitreinamentos.com.br/" class="navbar-brand h2 mb-0">JCAVI</a>
                 <button class="navbar-toggler" type="submit" data-toggle="collapse" data-target="#navbarSite">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="colapse navbar-collapse" id="navbarSite">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a href="#" th:href="@{/cliente/adicionar}" class="nav-link">Cadastrar Clientes</a></li>
-                        <li class="nav-item"><a href="#" th:href="@{/cliente}" class="nav-link">Listar Clientes</a></li>
-                        <li class="nav-item"><a href="#" th:href="@{/produto/adicionar}" class="nav-link">Cadastrar Produtos</a></li>
-                        <li class="nav-item"><a href="#" th:href="@{/produto}" class="nav-link">Listar Proutos</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navDrop">Categorias</a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item" th:href="@{/categoria/adicionar}">Cadastrar</a>
+                            <a href="#" class="dropdown-item" th:href="@{/categoria}">Listar</a>
+                        </div>
+                    </li>
+                    </ul>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navDrop">Clientes</a>
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item" th:href="@{/cliente/adicionar}">Cadastrar</a>
+                                <a href="#" class="dropdown-item" th:href="@{/cliente}">Listar</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navDrop">Produtos</a>
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item" th:href="@{/produto/adicionar}">Cadastrar</a>
+                                <a href="#" class="dropdown-item" th:href="@{/produto}">Listar</a>
+                            </div>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
@@ -39,7 +60,7 @@
                         </li>
                     </ul>
                     <form action="" class="form-inline">
-                        <input type="search" class="form-control ml-4 mr-2" placeholder="Digite aqui...">
+                        <input type="search" class="form-control ml-4 mr-2" placeholder="Buscar...">
                         <button type="submit" class="btn btn-dark">Ok</button>
                     </form>
                 </div>
@@ -52,7 +73,7 @@
     <p class="lead">CADASTRO DE PRODUTOS</p>
 </div>
 
-<div class="container col-6">
+        <div class="container col-6">
     <form th:object="${produto}" th:action="@{/produto/adicionar}" method="post">
 
         <div class="form-group row">
@@ -70,19 +91,43 @@
                 <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Nome">
             </div>
             <div class="form-group col-md-6" th:classappend="${#fields.hasErrors('valor')}? 'has-error'">
-                <label for="valor">valor</label>
-                <input type="text" class="form-control" id="valor" th:field="*{valor}" placeholder="valor">
+                <label for="valor">Valor</label>
+                <input type="text" class="form-control" id="valor" th:field="*{valor}" placeholder="Valor">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6" th:classappend="${#fields.hasErrors('quantidade')}? 'has-error'">
                 <label for="quantidade">Quantidade</label>
-                <input type="text" class="form-control" id="quantidade" th:field="*{quantidade}" placeholder="quantidade">
-            </div>           
+                <input type="text" class="form-control" id="quantidade" th:field="*{quantidade}" placeholder="Quantidade">
+            </div>
         </div>
+
+        <br />
+
+        <div class="form-row" th:if="${#lists.size(todasCategorias) > 0}">
+            <strong>Categorias:</strong>
+            <br /><br />
+            <table class="table table-hover table-sm">
+                <tbody>
+                <tr th:each="categoria : ${todasCategorias}" >
+                    <td>
+                        <input type="checkbox" name="categoriasAdicionadas" th:value="${categoria.id}"
+                               th:field="${produto.categoria}"
+                        />
+                        &nbsp;
+                        <span th:text="${categoria.nome}"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br />
+        <input type="button" onclick="location.href='/produto';" value="Cancelar" /> &nbsp;&nbsp;
+
         <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
-</div>
+        </div>
 
 <!-- JavaScript (Opcional) -->
 <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->

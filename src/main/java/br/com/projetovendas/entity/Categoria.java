@@ -1,5 +1,8 @@
 package br.com.projetovendas.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
@@ -16,17 +19,16 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotEmpty(message = "Precisamos do seu nome!")
-    private String name;
+    private String nome;
 
     @ManyToMany
     @JoinTable(name = "produto_categoria",
-                joinColumns = @JoinColumn(name = "id.categoria"),
-                inverseJoinColumns = @JoinColumn(name = "id.produto")
+                joinColumns = @JoinColumn(name = "id_categoria"),
+                inverseJoinColumns = @JoinColumn(name = "id_produto")
     )
     private List<Produto> produto = new ArrayList<>();
 
-    public Categoria(){
-
+    public Categoria() {
     }
 
     public Long getId() {
@@ -37,12 +39,12 @@ public class Categoria {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public List<Produto> getProduto() {

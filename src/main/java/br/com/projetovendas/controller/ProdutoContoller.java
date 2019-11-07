@@ -1,18 +1,16 @@
 package br.com.projetovendas.controller;
 
+
 import br.com.projetovendas.entity.Categoria;
 import br.com.projetovendas.entity.Produto;
 import br.com.projetovendas.service.CategoriaService;
 import br.com.projetovendas.service.ProdutoService;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
+
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -26,24 +24,27 @@ public class ProdutoContoller {
         this.categoriaService = categoriaService;
         this.produtoService = produtoService;
     }
-    @GetMapping
+    @GetMapping("")
     public ModelAndView listar() {
         ModelAndView mv = new ModelAndView("produto/listarproduto");
-        List<Produto> produtos = produtoService.listarTodosProdutos();
-        mv.addObject("p", produtos);
+        List<Produto> produtos = this.produtoService.listarTodosProdutos();
+        mv.addObject("produtos", produtos);
         return mv;
     }
+
     @GetMapping("/adicionar")
     public ModelAndView adicionarProduto(Produto produto) {
         ModelAndView mv = new ModelAndView("produto/adicionarproduto");
         mv.addObject("produto", produto);
+        List<Categoria> categoria = this.categoriaService.listarTodasCategorias();
+        mv.addObject("todasCategorias", categoria);
         return mv;
     }
+
     @PostMapping("/adicionar")
-    public ModelAndView adicionar(@Valid Produto produto, BindingResult result) {
-        if (result.hasErrors()) {
-            return adicionarProduto(produto);
-        }
+    public ModelAndView adicionar(Produto produto, Long[] id) {
+        List<Categoria> categorias = categoriaService.listarCategoriaId(Arrays.asList(id));
+        produto.setCategoria(categorias);
         produtoService.cadastrar(produto);
         return listar();
     }
@@ -57,7 +58,7 @@ public class ProdutoContoller {
         Produto produto = produtoService.listarUmProduto(id);
         ModelAndView mv = new ModelAndView("produto/detalhesproduto");
         mv.addObject("produto", produto);
-        List<Categoria> categorias = categoriaService.listarTodasCategoriasProduto(produto);
+        List<Categoria> categorias = categoriaService.listarTodasCategorias();
         mv.addObject("categorias", categorias);
         return mv;
     }
