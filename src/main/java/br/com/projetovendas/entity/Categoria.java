@@ -1,8 +1,6 @@
 package br.com.projetovendas.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
@@ -13,7 +11,7 @@ import java.util.List;
 @Entity
 @Audited
 @Table(name = "categoria")
-public class Categoria {
+public class Categoria extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,12 +19,8 @@ public class Categoria {
     @NotEmpty(message = "Precisamos do seu nome!")
     private String nome;
 
-    @ManyToMany
-    @JoinTable(name = "produto_categoria",
-                joinColumns = @JoinColumn(name = "id_categoria"),
-                inverseJoinColumns = @JoinColumn(name = "id_produto")
-    )
-    private List<Produto> produto = new ArrayList<>();
+    @ManyToMany(mappedBy="categorias")
+    private List<Produto> produtos = new ArrayList<>();
 
     public Categoria() {
     }
@@ -48,10 +42,10 @@ public class Categoria {
     }
 
     public List<Produto> getProduto() {
-        return produto;
+        return produtos;
     }
 
     public void setProduto(List<Produto> produto) {
-        this.produto = produto;
+        this.produtos = produto;
     }
 }

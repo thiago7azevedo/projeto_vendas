@@ -1,25 +1,30 @@
 package br.com.projetovendas.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Audited
 public class Endereco extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+
+    @NotEmpty(message="Endereço é obrigatório")
     private String logradouro;
+
+    @NotEmpty(message="Bairro é obrigatório")
     private String bairro;
+
+    @NotEmpty(message="Cidade é obrigatório")
     private String cidade;
+
+    @NotEmpty(message="UF é obrigatório")
     private String uf;
-    private String cep;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente")
@@ -66,14 +71,6 @@ public class Endereco extends BaseEntity {
 
     public void setUf(String uf) {
         this.uf = uf;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
     }
 
     public Cliente getCliente() {

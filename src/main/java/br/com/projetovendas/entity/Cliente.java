@@ -1,14 +1,14 @@
 package br.com.projetovendas.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,19 +17,27 @@ import java.util.List;
 public class Cliente extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty(message = "Campo nome não pode ser vazio")
+    @NotEmpty(message="Nome é obrigatório")
     private String nome;
-    private String sobrenome;
-    @Min(value = 16, message = "idade mínima tem que ser 16 anos")
-    private int idade;
-    private String profissao;
-    @NotEmpty(message = "Email é obrigatório")
-    @Email(message = "email tem que ser válido")
+
+    @NotEmpty(message="E-mail é obrigatório")
+    @Email(message="E-mail inválido")
     private String email;
-    private String telefone;
+
+    @NotEmpty(message="Senha é obrigatório")
+    @Length(min=6,max=8,message="A senha deve possuir no mínimo 6 e no máximo 8 caracteres")
+    private String senha;
+
+    @NotNull(message="Idade é obrigatório")
+    @Min(value=18,message="Não são permitidos cadastros de clientes menores de 18 anos")
+    private String idade;
+
+    @NotEmpty(message="Profissão é obrigatório")
+    @Length(min=3,max=200, message="Profissão deve conter pelo menos 3 caracteres")
+    private String profissao;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Endereco> enderecos = new ArrayList<>();
@@ -53,19 +61,11 @@ public class Cliente extends BaseEntity {
         this.nome = nome;
     }
 
-    public String getSobrenome() {
-        return sobrenome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
-    }
-
-    public int getIdade() {
+    public String getIdade() {
         return idade;
     }
 
-    public void setIdade(int idade) {
+    public void setIdade(String idade) {
         this.idade = idade;
     }
 
@@ -85,14 +85,6 @@ public class Cliente extends BaseEntity {
         this.email = email;
     }
 
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
     public List<Endereco> getEnderecos() {
         return enderecos;
     }
@@ -100,4 +92,13 @@ public class Cliente extends BaseEntity {
     public void setEnderecos(List<Endereco> enderecos) {
         this.enderecos = enderecos;
     }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
 }

@@ -1,13 +1,13 @@
 package br.com.projetovendas.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
-import javax.validation.Valid;
+
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +21,18 @@ public class Produto extends BaseEntity {
     private Long id;
     @NotEmpty(message = "Insira seu nome!")
     private String nome;
-    @NotEmpty(message = "Insira o valor do produto")
-    private String valor;
-    @NotEmpty(message = "Precisamos da quantidade do produto")
-    private String quantidade;
+    @NotNull(message="Valor é obrigatório")
+    @DecimalMin(message="Valor mínimo exigido",value="0.01")
+    private Double valor;
+    @NotNull(message = "Precisamos da quantidade do produto")
+    private Integer quantidade;
 
-    @ManyToMany(mappedBy = "produto", cascade = CascadeType.ALL)
-    private List<Categoria> categoria = new ArrayList<>();
+    @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinTable(name="produto_categoria",
+            joinColumns=@JoinColumn(name="produto_id"),
+            inverseJoinColumns=@JoinColumn(name="categoria_id"))
+    @NotEmpty(message="Obrigatório definir ao menos 1 categoria para o produto")
+    private List<Categoria> categorias = new ArrayList<>();
 
     public Produto() {
     }
@@ -48,27 +53,27 @@ public class Produto extends BaseEntity {
         this.nome = nome;
     }
 
-    public String getValor() {
+    public Double getValor() {
         return valor;
     }
 
-    public void setValor(String valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 
-    public String getQuantidade() {
+    public Integer getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(String quantidade) {
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
 
     public List<Categoria> getCategoria() {
-        return categoria;
+        return categorias;
     }
 
     public void setCategoria(List<Categoria> categoria) {
-        this.categoria = categoria;
+        this.categorias = categoria;
     }
 }

@@ -78,8 +78,10 @@
 
     <div class="container" th:each="cliente : ${cliente}">
         <h2 th:text="${cliente.nome}"></h2>
-       <p th:text="${cliente.sobrenome}"></p>
         <b>Email: </b><p th:text="${cliente.email}"></p>
+        <b>Idade: </b><p th:text="${cliente.idade}"></p>
+        <b>Profissão: </b><p th:text="${cliente.profissao}"></p>
+
     </div>
 
 </div>
@@ -94,7 +96,6 @@
                 <td><span th:text="${endereco.cidade}"></span></td>
                 <td><span th:text="${endereco.uf}"></span></td>
                 <td><span th:text="${endereco.bairro}"></span></td>
-                <td><span th:text="${endereco.cep}"></span></td>
             </tr>
             </tbody>
         </table>
@@ -129,7 +130,7 @@
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="logradouro" class="col-form-label">Logradouro</label>
+                        <label for="logradouro" class="col-form-label">Endereço</label>
                         <input type="text" class="form-control" id="logradouro" name="logradouro">
                     </div>
                     <div class="form-group">
@@ -143,10 +144,6 @@
                     <div class="form-group">
                         <label for="uf" class="col-form-label">Uf</label>
                         <input type="text" class="form-control" id="uf" name="uf">
-                    </div>
-                    <div class="form-group">
-                        <label for="cep" class="col-form-label">CEP</label>
-                        <input type="text" class="form-control" id="cep" name="cep">
                     </div>
 
                 </div>

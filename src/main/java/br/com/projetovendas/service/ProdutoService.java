@@ -1,5 +1,6 @@
 package br.com.projetovendas.service;
 
+import br.com.projetovendas.entity.Categoria;
 import br.com.projetovendas.entity.Produto;
 import br.com.projetovendas.repository.ProdutoRepository;
 import org.hibernate.ObjectNotFoundException;
@@ -34,5 +35,8 @@ public class ProdutoService {
     public void deletarProduto(Long id) {
         Produto produto = listarUmProduto(id);
         produtoRepository.delete(produto);
+    }
+    public List<Produto> listarTodasCategoria(Categoria categoria){
+        return this.produtoRepository.findAllByCategorias(categoria);
     }
 }

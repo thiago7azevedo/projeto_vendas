@@ -70,12 +70,11 @@
 
 <div class="jumbotron container col-md-6">
     <h1>Sistema de Vendas</h1>
-    <p class="lead">CADASTRO DE CATEGORIAS</p>
+    <p class="lead">CADASTRO DE CATEGORIA</p>
 </div>
 
 <div class="container col-6">
     <form th:object="${categoria}" th:action="@{/categoria/adicionar}" method="post">
-
         <div class="form-group row">
             <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
                 <div th:each="detailedError : ${#fields.detailedErrors()}">

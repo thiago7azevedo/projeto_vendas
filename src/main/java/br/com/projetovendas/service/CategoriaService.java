@@ -3,6 +3,7 @@ package br.com.projetovendas.service;
 
 import br.com.projetovendas.entity.Categoria;
 
+import br.com.projetovendas.entity.Produto;
 import br.com.projetovendas.repository.CategoriaRepository;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,16 @@ public class CategoriaService {
         this.categoriaRepository = categoriaRepository;
     }
 
-     public Categoria listarCategoria(Long id){
+    public List<Categoria> listarTodasCategorias(){
+        return this.categoriaRepository.findAll();
+    }
+
+    public Categoria listarCategoria(Long id){
         return categoriaRepository.findById(id).orElseThrow(() ->
                 new ObjectNotFoundException("categoria não encontrada!", Categoria.class.getName()));
    }
-    public List<Categoria> listarTodasCategorias(){
-        return categoriaRepository.findAll();
+    public List<Categoria> listarTodasCategorias(Produto produto){
+        return this.categoriaRepository.findAllByProdutos(produto);
     }
 
     public void deletarCategoria(Long id){

@@ -80,18 +80,13 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-
             </tr>
         </thea>
         <tbody>
         <tr th:each="categoria : ${categorias}">
             <th><span th:text="${categoria.id}"></span></th>
             <td><span th:text="${categoria.nome}"></span></td>
-                        <td><a href="#" th:href="@{/categoria/editar/{link}(link=${categoria.id})}"><span></span>editar</a></td>
+            <td><a href="#" th:href="@{/categoria/editar/{link}(link=${categoria.id})}"><span></span>editar</a></td>
             <td><a href="#" th:href="@{/categoria/deletar/{link}(link=${categoria.id})}"><span></span>remover</a></td>
         </tr>
         </tbody>
